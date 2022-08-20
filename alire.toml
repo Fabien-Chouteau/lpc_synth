@@ -1,0 +1,9 @@
+name = "lpc_synth"
+description = "Ada implementation of Linear Predictive Coding voice synthesizer"
+version = "0.1.0-dev"
+tags = ["synth", "audio", "speach", "voice", "lpc"]
+website = "https://github.com/Fabien-Chouteau/lpc_synth"
+
+authors = ["Fabien Chouteau"]
+maintainers = ["Fabien Chouteau <fabien.chouteau@gmail.com>"]
+maintainers-logins = ["Fabien-Chouteau"]

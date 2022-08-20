@@ -1,0 +1,14 @@
+name = "tests"
+description = ""
+version = "0.1.0-dev"
+
+executables = ["tests"]
+
+[[depends-on]]
+lpc_synth = "*"
+
+[[pins]]
+lpc_synth = { path='../' }
+
+[build-profiles]
+lpc_synth = "Development"
