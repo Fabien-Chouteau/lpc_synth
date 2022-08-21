@@ -1,6 +1,8 @@
 with Interfaces; use Interfaces;
 
-package LPC_Synth is
+package LPC_Synth
+with Preelaborate
+is
 
    type Instance is private;
 

@@ -1,6 +1,8 @@
 --  Converted to Ada from the Talkie Arduino project:
 --  https://github.com/ArminJo/Talkie
-package LPC_Synth.Vocab_US_TI99 is
+package LPC_Synth.Vocab_US_TI99
+with Preelaborate
+is
    pragma Style_Checks (Off);
    spt_A : aliased constant LPC_Synth.LPC_Data := (16#e5#, 16#51#, 16#73#, 16#a4#, 16#e5#, 16#54#, 16#bb#, 16#46#, 16#e7#, 16#dc#, 16#fd#, 16#9f#, 16#b5#, 16#6a#, 16#ab#, 16#4e#, 16#05#, 16#22#, 16#be#, 16#99#, 16#b2#, 16#b7#, 16#3f#, 16#07#, 16#e1#, 16#e0#, 16#00#, 16#00#);
    spt_A1 : aliased constant LPC_Synth.LPC_Data := (16#b5#, 16#6c#, 16#a4#, 16#62#, 16#3e#, 16#34#, 16#b3#, 16#66#, 16#6c#, 16#cd#, 16#b7#, 16#b6#, 16#f7#, 16#4e#, 16#e7#, 16#dd#, 16#1b#, 16#fc#, 16#00#, 16#00#);

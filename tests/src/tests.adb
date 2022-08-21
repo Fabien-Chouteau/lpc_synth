@@ -1,7 +1,10 @@
 with GNAT.OS_Lib;
 
 with LPC_Synth;
-with LPC_Synth.Vocab_US_TI99; use LPC_Synth.Vocab_US_TI99;
+
+with LPC_Synth.Vocab_Festival.WE;
+with LPC_Synth.Vocab_Festival.NO;
+with LPC_Synth.Vocab_Festival.MA;
 
 procedure Tests is
    D : LPC_Synth.Instance;
@@ -9,8 +12,9 @@ procedure Tests is
 
    Data_List : constant array (Natural range <>)
      of LPC_Synth.LPC_Data_Const_Acc
-       := (spt_HELLO'Access,
-           spt_READY_TO_START'Access);
+       := (LPC_Synth.Vocab_Festival.WE.We'Access,
+           LPC_Synth.Vocab_Festival.NO.Noise'Access,
+           LPC_Synth.Vocab_Festival.MA.Maker'Access);
 
    Ignore : Integer;
 begin

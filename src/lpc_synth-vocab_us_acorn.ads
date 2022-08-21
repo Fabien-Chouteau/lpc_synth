@@ -1,6 +1,8 @@
 --  Converted to Ada from the Talkie Arduino project:
 --  https://github.com/ArminJo/Talkie
-package LPC_Synth.Vocab_US_Acorn is
+package LPC_Synth.Vocab_US_Acorn
+with Preelaborate
+is
    pragma Style_Checks (Off);
    spa_TONE1 : aliased constant LPC_Synth.LPC_Data := (16#b1#, 16#4f#, 16#7b#, 16#bb#, 16#bb#, 16#c9#, 16#2e#, 16#55#, 16#ca#, 16#b9#, 16#57#, 16#2a#, 16#e5#, 16#5c#, 16#ab#, 16#95#, 16#72#, 16#ae#, 16#55#, 16#ca#, 16#b9#, 16#57#, 16#2a#, 16#e5#, 16#5c#, 16#ab#, 16#95#, 16#72#, 16#ae#, 16#55#, 16#ca#, 16#b9#, 16#57#, 16#2a#, 16#e5#, 16#5c#, 16#ab#, 16#95#, 16#72#, 16#ae#, 16#55#, 16#ca#, 16#b9#, 16#57#, 16#2a#, 16#e5#, 16#5c#, 16#ab#, 16#95#, 16#72#, 16#ae#, 16#55#, 16#ca#, 16#b9#, 16#5f#, 16#52#, 16#64#, 16#8a#, 16#9c#, 16#9e#, 16#a8#, 16#50#);
    spa_TONE2 : aliased constant LPC_Synth.LPC_Data := (16#b2#, 16#8f#, 16#7b#, 16#bb#, 16#bb#, 16#c9#, 16#2e#, 16#a5#, 16#d4#, 16#ba#, 16#97#, 16#52#, 16#ea#, 16#5d#, 16#4b#, 16#a9#, 16#75#, 16#2e#, 16#a5#, 16#d4#, 16#ba#, 16#97#, 16#52#, 16#ea#, 16#5d#, 16#4b#, 16#a9#, 16#75#, 16#2e#, 16#a5#, 16#d4#, 16#ba#, 16#97#, 16#52#, 16#ea#, 16#5d#, 16#4b#, 16#a9#, 16#75#, 16#2e#, 16#a5#, 16#d4#, 16#ba#, 16#97#, 16#52#, 16#ea#, 16#5d#, 16#4b#, 16#a9#, 16#75#, 16#2e#, 16#a5#, 16#d4#, 16#ba#, 16#9f#, 16#88#, 16#5a#);
