@@ -41,8 +41,14 @@ is
    function Has_Data (This : Instance) return Boolean;
    --  Return True if there is LCP data left to decode
 
-   procedure Next_Points (This   : in out Instance;
-                          Output :    out Out_Array);
+   subtype Time_Stretch_Factor is Float range 0.01 .. 10.0;
+
+   subtype Picth_Shift_Factor is Float range 0.01 .. 10.0;
+
+   procedure Next_Points (This         : in out Instance;
+                          Output       :    out Out_Array;
+                          Pitch_Shift  :        Picth_Shift_Factor := 1.0;
+                          Time_Stretch :        Time_Stretch_Factor := 1.0);
    --  Generate the next sample points for the previously set LPC data frames.
    --  If there is no LPC data, or if the end of data is reached, the Output
    --  is filled with zeroes.
@@ -62,7 +68,7 @@ private
    type Energy_Array is array (UInt4) of Unsigned_8;
    type Energy_Array_Const_Acc is access constant Energy_Array;
 
-   type Pitch_Array is array (UInt6) of Unsigned_8;
+   type Pitch_Array is array (UInt6) of Natural;
    type Pitch_Array_Const_Acc is access constant Pitch_Array;
 
    type K_32_Array is array (UInt5) of Integer_16;
@@ -174,15 +180,13 @@ private
       TI_LATER_CHIRP'Access,
       TI_INTERP'Access);
 
-   type Point_Counter is mod 200;
-
    type Instance is tagged record
-      Point : Point_Counter := 0;
+      Point : Natural := Natural'Last;
 
       K1, K2, K3, K4, K5, K6, K7, K8, K9, K10 : Integer_32 := 0;
       X0, X1, X2, X3, X4, X5, X6, X7, X8, X9 : Integer_32 := 0;
-      Period     : Unsigned_8 := 0;
-      Period_Cnt : Unsigned_8 := 0;
+      Period     : Natural := 0;
+      Period_Cnt : Natural := 0;
       Energy     : Unsigned_8 := 0;
       Rand       : Unsigned_16 := 1;
 

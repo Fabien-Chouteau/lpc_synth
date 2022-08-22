@@ -16,17 +16,29 @@ procedure Tests is
            LPC_Synth.Vocab_Festival.NO.Noise'Access,
            LPC_Synth.Vocab_Festival.MA.Maker'Access);
 
+   Stretch_Array : constant array (Natural range <>)
+     of LPC_Synth.Time_Stretch_Factor
+       := (0.5, 1.0, 3.0);
+
+   Pitch_Array : constant array (Natural range <>)
+     of LPC_Synth.Picth_Shift_Factor
+       := (0.25, 1.0, 4.0);
+
    Ignore : Integer;
 begin
 
-   for Word of Data_List loop
-      LPC_Synth.Set_Data (D, Word);
-      while LPC_Synth.Has_Data (D) loop
-         LPC_Synth.Next_Points (D, Output);
+   for Stretch of Stretch_Array loop
+      for Pitch of Pitch_Array loop
+         for Word of Data_List loop
+            LPC_Synth.Set_Data (D, Word);
+            while LPC_Synth.Has_Data (D) loop
+               LPC_Synth.Next_Points (D, Output, Pitch, Stretch);
 
-         for Elt of Output loop
-            Ignore := GNAT.OS_Lib.Write
-              (GNAT.OS_Lib.Standout, Elt'Address, Elt'Size / 8);
+               for Elt of Output loop
+                  Ignore := GNAT.OS_Lib.Write
+                    (GNAT.OS_Lib.Standout, Elt'Address, Elt'Size / 8);
+               end loop;
+            end loop;
          end loop;
       end loop;
    end loop;

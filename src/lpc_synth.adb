@@ -75,8 +75,10 @@ package body LPC_Synth is
    -- Next_Points --
    -----------------
 
-   procedure Next_Points (This   : in out Instance;
-                          Output :    out Out_Array)
+   procedure Next_Points (This         : in out Instance;
+                          Output       :    out Out_Array;
+                          Pitch_Shift  :        Picth_Shift_Factor := 1.0;
+                          Time_Stretch :        Time_Stretch_Factor := 1.0)
 
    is
       --  Right now we only have this coeffs table
@@ -95,9 +97,15 @@ package body LPC_Synth is
       U0, U1, U2, U3, U4, U5, U6, U7, U8, U9, U10 : Integer_32;
 
       Out_Idx : Natural := Output'First;
+
+      Points_Per_Frame : constant Natural := Natural (200.0 * Time_Stretch);
+      Voiced : Boolean;
    begin
       loop
-         if This.Point = 0 then
+         if This.Point >= Points_Per_Frame then
+
+            This.Point := 0;
+
             --  Get a new data frame
 
             Energy := Get_Bits (This);
@@ -125,13 +133,24 @@ package body LPC_Synth is
                Period := Get_Bits (This);
                This.Period := Table.Pitch_Table (Period);
 
+               Voiced := This.Period /= 0;
+
+               --  Pitch shift
+               This.Period := Natural (Float (This.Period) * Pitch_Shift);
+
+               --  Make sure pitch shifting is not setting a Period of zero
+               --  for a voiced frame.
+               if Voiced and then This.Period = 0 then
+                  This.Period := 1;
+               end if;
+
                if Repeat = 0 then
                   This.K1 := Integer_32 (Table.K.K1 (Get_Bits (This)));
                   This.K2 := Integer_32 (Table.K.K2 (Get_Bits (This)));
                   This.K3 := Integer_32 (Table.K.K3 (Get_Bits (This)));
                   This.K4 := Integer_32 (Table.K.K4 (Get_Bits (This)));
 
-                  if This.Period /= 0 then
+                  if Voiced then
                      --  Voiced
                      This.K5  := Integer_32 (Table.K.K5 (Get_Bits (This)));
                      This.K6  := Integer_32 (Table.K.K6 (Get_Bits (This)));
@@ -152,10 +171,11 @@ package body LPC_Synth is
                This.Period_Cnt := 0;
             end if;
 
-            if This.Period_Cnt <= Table.Chrip_Table'Last then
+            if This.Period_Cnt <= Natural (Table.Chrip_Table'Last) then
                declare
                   Chrip : constant Unsigned_32 :=
-                    Unsigned_32 (Table.Chrip_Table (This.Period_Cnt));
+                    Unsigned_32 (Table.Chrip_Table
+                                 (Unsigned_8 (This.Period_Cnt)));
                   Energy : constant Unsigned_32 :=
                     Unsigned_32 (This.Energy);
                begin
