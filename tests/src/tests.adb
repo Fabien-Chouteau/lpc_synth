@@ -21,8 +21,10 @@ procedure Tests is
        := (0.5, 1.0, 3.0);
 
    Pitch_Array : constant array (Natural range <>)
-     of LPC_Synth.Picth_Shift_Factor
-       := (0.25, 1.0, 4.0);
+     of Float
+       := (LPC_Synth.Base_Pitch / 4.0,
+           LPC_Synth.Base_Pitch,
+           LPC_Synth.Base_Pitch * 4.0);
 
    Ignore : Integer;
 begin
@@ -32,7 +34,9 @@ begin
          for Word of Data_List loop
             LPC_Synth.Set_Data (D, Word);
             while LPC_Synth.Has_Data (D) loop
-               LPC_Synth.Next_Points (D, Output, Pitch, Stretch);
+               LPC_Synth.Next_Points (D, Output,
+                                      Pitch => Pitch,
+                                      Time_Stretch => Stretch);
 
                for Elt of Output loop
                   Ignore := GNAT.OS_Lib.Write

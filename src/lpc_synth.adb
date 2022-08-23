@@ -77,7 +77,8 @@ package body LPC_Synth is
 
    procedure Next_Points (This         : in out Instance;
                           Output       :    out Out_Array;
-                          Pitch_Shift  :        Picth_Shift_Factor := 1.0;
+                          Sample_Rate  :        Natural := 8_000;
+                          Pitch        :        Float := Base_Pitch;
                           Time_Stretch :        Time_Stretch_Factor := 1.0)
 
    is
@@ -100,6 +101,11 @@ package body LPC_Synth is
 
       Points_Per_Frame : constant Natural := Natural (200.0 * Time_Stretch);
       Voiced : Boolean;
+
+      Point_Repeat : constant Natural := Sample_Rate / 8_000;
+      Pitch_Shift : constant Float := Base_Pitch / Pitch;
+
+      Point : Integer_16;
    begin
       loop
          if This.Point >= Points_Per_Frame then
@@ -220,13 +226,20 @@ package body LPC_Synth is
          This.X1 := This.X0 + ((This.K1 * U0) / 2**9);
          This.X0 := U0;
 
-         Output (Out_Idx) := Integer_16 (U0 * 2**6);
-         Out_Idx := Out_Idx + 1;
          This.Point := This.Point + 1;
 
-         if Out_Idx > Output'Last then
-            return;
-         end if;
+         Point := Integer_16 (U0 * 2**6);
+
+         for X in 1 .. Point_Repeat loop
+            Output (Out_Idx) := Point;
+            Out_Idx := Out_Idx + 1;
+            if Out_Idx > Output'Last then
+               return;
+            end if;
+
+         end loop;
+
+
       end loop;
    end Next_Points;
 

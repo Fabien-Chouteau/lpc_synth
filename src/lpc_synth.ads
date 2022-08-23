@@ -43,11 +43,12 @@ is
 
    subtype Time_Stretch_Factor is Float range 0.01 .. 10.0;
 
-   subtype Picth_Shift_Factor is Float range 0.01 .. 10.0;
+   Base_Pitch : constant Float := 440.0;
 
    procedure Next_Points (This         : in out Instance;
                           Output       :    out Out_Array;
-                          Pitch_Shift  :        Picth_Shift_Factor := 1.0;
+                          Sample_Rate  :        Natural := 8_000;
+                          Pitch        :        Float := Base_Pitch;
                           Time_Stretch :        Time_Stretch_Factor := 1.0);
    --  Generate the next sample points for the previously set LPC data frames.
    --  If there is no LPC data, or if the end of data is reached, the Output
