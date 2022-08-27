@@ -239,7 +239,6 @@ package body LPC_Synth is
 
          end loop;
 
-
       end loop;
    end Next_Points;
 
