@@ -62,7 +62,13 @@ generate_for_letter(){
     do
         prefix=${first_letter}${sec_letter}
         echo "Generate words with prefix: '${prefix}'"
-        package_name="LPC_Synth.Vocab_Festival.${prefix^^}"
+        if is_ada_keyword ${prefix}; then
+            package_child=${prefix}_K
+        else
+            package_child=${word}
+        fi
+
+        package_name="LPC_Synth.Vocab_Festival.${package_child^^}"
         src="package ${package_name}\n"
         src+="with Preelaborate\n"
         src+="is\n"
