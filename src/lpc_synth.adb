@@ -228,7 +228,17 @@ package body LPC_Synth is
 
          This.Point := This.Point + 1;
 
-         Point := Integer_16 (U0 * 2**6);
+         declare
+            Tmp : constant Integer_32 := U0 * 2**6;
+         begin
+            if Tmp > Integer_32 (Integer_16'Last) then
+               Point := Integer_16'Last;
+            elsif Tmp < Integer_32 (Integer_16'First) then
+               Point := Integer_16'First;
+            else
+               Point := Integer_16 (Tmp);
+            end if;
+         end;
 
          for X in 1 .. Point_Repeat loop
             Output (Out_Idx) := Point;

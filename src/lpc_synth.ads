@@ -3,7 +3,6 @@ with Interfaces; use Interfaces;
 package LPC_Synth
 with Preelaborate
 is
-
    type Instance is private;
 
    type LPC_Data is array (Natural range <>) of Unsigned_8;
